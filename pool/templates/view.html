@@ -1,0 +1,19 @@
+{% load bootstrap3 %}
+{% load render_table from django_tables2 %}
+{% block style %}
+table, th, td {
+    border: 1px solid black;
+}
+{% endblock %}
+{% block title %}
+    Display
+{% endblock  %}
+
+{% block heading %}
+    <h1> Display  </h1>
+{% endblock  %}
+
+{% block content %}
+{% render_table data %}
+{% endblock  %}
+
