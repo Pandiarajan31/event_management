@@ -9,6 +9,9 @@ from django.db import models
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .decorators import staff_required
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
 
 # Create your views here.
 
@@ -51,6 +54,11 @@ class AdPostingView(CreateView):
         success_url = '/thanks/'
         fields = '__all__'
 
-def view(request):
-        data = Item.objects.all()
-        return render(request,'view.html',{ 'data':data })
+class view(ListView):
+        paginate_by = 10
+        model = Item
+        template_name = "view.html"
+
+class ItemDetail(DetailView):
+        model = Item
+        template_name="details.html" 

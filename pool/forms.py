@@ -39,9 +39,3 @@ class AdminUserForm(forms.ModelForm):
             raise ValidationError('Password dont match !!!')
 
         return cd['password2']
-
-class AdPostingForm(forms.ModelForm):
-    class Meta:
-        model = Item
-        fields = '__all__'
-        # exclude=('item_images',)

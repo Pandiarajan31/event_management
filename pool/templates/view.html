@@ -1,19 +1,19 @@
-{% load bootstrap3 %}
-{% load render_table from django_tables2 %}
-{% block style %}
-table, th, td {
-    border: 1px solid black;
-}
-{% endblock %}
-{% block title %}
-    Display
-{% endblock  %}
-
-{% block heading %}
-    <h1> Display  </h1>
-{% endblock  %}
-
+{% extends 'base.html' %}
 {% block content %}
-{% render_table data %}
+{% for temp in object_list %}
+<div class="col-md-4"><br><br>
+<div class="card"  style="width: 18rem;background-color:white">
+    <img class="card-img-top" width=200px height=200px src="{{temp.event_images.url}}"  alt="Card image cap">
+    <div class="card-body">
+      <p class="card-text b"><b>{{ temp.event_description }}</b> by</p>
+      <h4 class="card-title">{{ temp.event_title }}</h4>
+      <p style="color:rgb(167, 163, 163);margin-left:90%"> {{ temp.venue }} </p>
+      <a href="{% url 'Event_detail' temp.id %}" class="btn btn-primary" style="margin-top:20%">View More</a>
+    </div>
+  </div>
+  </div>
+{% endfor %}
+
+
 {% endblock  %}
 

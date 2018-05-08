@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class=" row">
+   <img class="img-thumbnail" src="{{ object.detailed_images.url }}" width=100% >
+</div><br>
+    <div class="container">
+    <div class="row">
+    <div class="col-md-3 color" style="font-style:italic">
+               <b> {{ object.date }}</b>
+    </div>
+    </div><br>
+    <div class="row">
+            <div class="col-md-1">
+            </div>
+    <div class="col-md-8">
+
+                   <div class="color" style="font-style:italic"><b>Title:</b> {{ object.event_title }}</div><br>
+                   <div class="color" style="font-style:oblique"><b> Ticket Price:Rs.</b> {{ object.price }} </div><br>
+                   <div class="color" style="font-style:oblique" ><b> Venue Details:</b>  {{ object.venue }}</div><br>
+                  
+    </div>
+            <div class="col-md-3 b box">
+                    <p style="font-size:25px"> <b>Detailed Description<b> </p>
+                        {{ object.event_description }}
+            </div>
+     </div>>
+</div>
+
+{% endblock  %}
+

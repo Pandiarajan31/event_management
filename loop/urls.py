@@ -22,5 +22,7 @@ from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^account/',include("pool.urls")),
-    url(r'^view/',views.view,name="display")
+    url(r'^view/',views.view.as_view(),name="display"),
+    url(r'^detail/(?P<pk>\d+)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
