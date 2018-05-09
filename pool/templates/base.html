@@ -19,6 +19,8 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}" />
 
     
@@ -37,6 +39,20 @@
         {% endblock  %}
 
     </div>
+
+</div>
+<div >
+    {% if request.user.is_superuser %}
+        <div>
+                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
+
+            
+        </div>
+    {% else %}
+    <div>
+        <a href="{% url 'eventposting' %}" class="btn btn-danger btn-rounded">Add New Event</a>    </div>
+    {% endif %}
+    
 </div>
 </body> 
 </html>

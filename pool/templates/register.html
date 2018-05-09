@@ -2,14 +2,17 @@
 {% block title %}
     Register
 {% endblock  %}
-
 {% block heading %}
+<center style="margin-top:10%">
     <h1> Register  </h1>
+</center>
 {% endblock  %}
 
 {% block content %}
+<center style="margin-top:3%">
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Register">
+</center>
 {% endblock  %}

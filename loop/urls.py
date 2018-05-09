@@ -16,13 +16,14 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from pool import views
+from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^account/',include("pool.urls")),
-    url(r'^view/',views.view.as_view(),name="display"),
-    url(r'^detail/(?P<pk>\d+)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
+    path('admin/', admin.site.urls),
+    path('account/',include("pool.urls")),
+    path('view/',views.view.as_view(),name="display"),
+    path('detail/(?P<pk>\d+)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
