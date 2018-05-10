@@ -13,6 +13,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from  django.views import  generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import SuperuserRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
@@ -65,7 +66,7 @@ class HomeView(generic.ListView):
         paginate_by = 10
         model = Item
 
-class AdPostingView(CreateView):
+class AdPostingView(SuperuserRequiredMixin, CreateView):
         template_name = "event/postevent.html"
         model = Item
         success_url = '/view/'

@@ -10,6 +10,22 @@
 
 {% block heading %}
 
+<div style="padding-top:4%;padding-left:6%">
+  {% if request.user.is_superuser %}
+        <div>
+
+<a href="{% url 'eventposting' %}" class="btn btn-danger btn-rounded">Add New Event</a>            
+        </div>
+    {% else %}
+    <div>
+
+                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
+            </div>
+    {% endif %}
+</div>
+
+
+
  <div style="padding-left:76%;padding-top:4%">
 
 <a href="{% url 'display' %}" class="btn btn-danger btn-rounded">Go To View Page</a>            

@@ -6,9 +6,15 @@
 {% block content %}
 <head>
 
+</div>
 </head>
 <body class="rock">
 <div class="container">
+
+    <div>
+
+                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
+            </div>
     <form method="post" action={% url 'login'%} class="form-signin">{% csrf_token %}
 <center>
     <h2 class="form-signin-heading" style="margin-top:10%">Please Sign in </h2><div style="margin-top:3%">

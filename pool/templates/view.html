@@ -3,6 +3,18 @@
 
 
 {% block content %}
+
+<div style="padding-top:4%;padding-left:6%">
+  {% if request.user.is_superuser %}
+        <div>
+
+<a href="{% url 'eventposting' %}" class="btn btn-danger btn-rounded">Add New Event</a>            
+        </div>
+    {% endif %}
+<a href="{% url 'logout' %}" class="top-menu btn btn-danger" style="width:10%;margin-left:80%">LOG OUT</a>
+</div>
+
+<center>
 {% for temp in object_list %}
 <div class="col-md-4"><br><br>
 <div class="card"  style="width: 18rem;background-color:white">
@@ -29,6 +41,7 @@
   </div>
 
 {% endfor %}
+</center>
 
 
 {% endblock  %}

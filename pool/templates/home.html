@@ -18,15 +18,19 @@
 <div class="row">
 <div class="col-md-4">
 <h1>home</h1>
-<h3>Hi {{request.user.name}} ,</h3>
+<h3>Welcome {{request.user.name}} </h3>
 </div>
 
 <br/>
 <div class="col-md-4">
-<a href="{% url 'logout' %}" style="background-color:black;color:white;text-decoration:none;font-size:200%;border-radius: 6px;">LOG OUT</a>
+
+</div>
+<div class="col-md-4">
+<a href="{% url 'logout' %}" class="top-menu btn btn-danger" style="width:20%;margin-top:%">LOG OUT</a>
+  <a href="{% url 'login' %}" class="top-menu btn btn-danger" style="width:20%;background:green">Log In </a>
 </div>
 </div>
-  <a href="{% url 'login' %}" class="top-menu">Log in <span class="glyphicon glyphicon-plus"></span></a>
+
 
 {% for temp in object_list %}
 <div class="col-md-4"><br><br>
