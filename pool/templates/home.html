@@ -20,15 +20,33 @@
 <h1>home</h1>
 <h3>Hi {{request.user.name}} ,</h3>
 </div>
-<div class="col-md-4">
-<a href="/account/eventposting" style="background-color:black;color:white;text-decoration:none;font-size:200%;border-radius: 6px;">POST AD</a>
-</div>
+
 <br/>
 <div class="col-md-4">
 <a href="{% url 'logout' %}" style="background-color:black;color:white;text-decoration:none;font-size:200%;border-radius: 6px;">LOG OUT</a>
 </div>
 </div>
   <a href="{% url 'login' %}" class="top-menu">Log in <span class="glyphicon glyphicon-plus"></span></a>
+
+{% for temp in object_list %}
+<div class="col-md-4"><br><br>
+<div class="card"  style="width: 18rem;background-color:white">
+	{%if temp.event_images %}
+    <img class="card-img-top" width=200px height=200px src="{{temp.event_images.url}}"  alt="Card image cap">
+    {% else %}
+    
+    {%endif%}
+    <div class="card-body">
+      <p class="card-text b"><b>{{ temp.event_description }}</b> by</p>
+      <h4 class="card-title">{{ temp.event_title }}</h4>
+      <p style="color:rgb(167, 163, 163);margin-left:90%"> {{ temp.venue }} </p>
+      <a href="{% url 'Event_detail' temp.id %}" class="btn btn-primary" style="margin-top:20%">View More</a>
+    </div>
+  </div>
+  </div>
+
+{% endfor %}
+  
 
 {% block content %}
     

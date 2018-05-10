@@ -27,32 +27,61 @@
 </head>
 <body>
 
+{% block special %}
+<div style="padding-top:4%;padding-left:6%">
+  {% if request.user.is_superuser %}
+        <div>
+
+<a href="{% url 'eventposting' %}" class="btn btn-danger btn-rounded">Add New Event</a>            
+        </div>
+    {% else %}
+    <div>
+
+                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
+            </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
+
     {% block heading %}
         
     {% endblock  %}
 <div class="container">
     <div class="row"> 
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+<div style="color:green">
+        {{ message }}
+</div>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
     
 
         {% block content %}
-    
+
         {% endblock  %}
 
     </div>
 
 </div>
 <div >
-    {% if request.user.is_superuser %}
-        <div>
-                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
-
-            
-        </div>
-    {% else %}
-    <div>
-        <a href="{% url 'eventposting' %}" class="btn btn-danger btn-rounded">Add New Event</a>    </div>
-    {% endif %}
+    
     
 </div>
+<div align="center" style="margin-top:3%">
+<a href="{% url 'home' %}" class="btn btn-danger btn-rounded" style="background-color:orange;width:10%;height:70%"> Home </a>            
+
+</div>
+
+
+
 </body> 
 </html>

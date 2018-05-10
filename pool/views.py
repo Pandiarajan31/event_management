@@ -13,43 +13,57 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from  django.views import  generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+
+
+
 
 
 
 # Create your views here.
-
-class RegistrationView(CreateView):
+class RegisterUserView(FormView):
 
         template_name = "register.html"
         form_class = RegisterUserForm
-        success_url = '/account/login/'
-
-
-class LoginView(FormView):
-        template_name = "registration/login.html"
-        form_class = LoginUserForm
-        success_url = '/account/home'
+        success_url = '/account/login'
 
         def form_valid(self, form):
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            UserProfile.objects.create_user(form.cleaned_data.get('email'),
+                                                 form.cleaned_data.get('password'),
+                                                 form.cleaned_data.get('mobile_no'),
+                                                 form.cleaned_data.get('name')                                     
+                                                 )
+            return render(self.request,"registration/login.html", {'form':LoginUserForm})
 
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(self.request, user)
-            return super(LoginView, self).form_valid(form)
 
-class HomeView(LoginRequiredMixin, generic.ListView):
+
+class LoginUserView(FormView):
+
+        template_name = "registration/login.html"
+        form_class = LoginUserForm
+
+        def post(self, request, *args, **kwargs):
+                email = request.POST['email']
+                password = request.POST['password']
+                # try:
+                user = authenticate(request, email=email, password=password)
+                print("auth", str(authenticate(email=email, password=password)))
+
+                if user is not None:
+                        login(request, user)
+                        return HttpResponseRedirect('/view/')
+
+                else:
+                        return HttpResponse("wrong input")
+
+class HomeView(generic.ListView):
         template_name = "home.html"
+        paginate_by = 10
         model = Item
-
-        def get_context_data(self, **kwargs):
-            context = super(HomeView, self).get_context_data(**kwargs)
-            print(context)
-            return context
-
-
 
 class AdPostingView(CreateView):
         template_name = "event/postevent.html"
@@ -70,3 +84,18 @@ class AddComment(LoginRequiredMixin, CreateView):
         template_name = "details.html"
         model = Comment
         fields = '__all__'
+
+class UpdateEvent(SuccessMessageMixin, UpdateView):
+        template_name = "event/postevent.html"
+        model = Item
+        success_url = reverse_lazy("eventposting")
+        success_message = "Updated successfully"
+        fields = '__all__'
+
+class DeleteEvent(SuccessMessageMixin, DeleteView):
+        model = Item
+        success_url = reverse_lazy('display')
+        template_name = "view.html"
+        success_message = "Deleted successfully"
+        fields = '__all__'
+

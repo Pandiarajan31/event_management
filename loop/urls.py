@@ -24,6 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/',include("pool.urls")),
     path('view/',views.view.as_view(),name="display"),
-    path('detail/(?P<pk>\d+)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
+    path('detail/(<pk>)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

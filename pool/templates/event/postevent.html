@@ -1,20 +1,33 @@
+
+{% extends 'base.html' %}
 {% load bootstrap3 %}
-{% block title %}
-    Post Event
-{% endblock  %}
+{% block special %}
+
+{% endblock %}
+
+
+
 
 {% block heading %}
-    <h1> Post Event</h1>
+
+ <div style="padding-left:76%;padding-top:4%">
+
+<a href="{% url 'display' %}" class="btn btn-danger btn-rounded">Go To View Page</a>            
+        </div>
+
+    <h1 align="center" style="margin-top:4%"> Post Event</h1>
 {% endblock  %}
 
 {% block content %}
+<div style="width:50%;margin-left:25%;" >
     <form action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
        <!-- {{ form.as_p }} -->
         {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Submit
+        <button type="submit" class="btn btn-primary" style="background:green;width:100%">
+            Submit
         </button>
+</div>
     {% endbuttons %}
     {% endblock  %}

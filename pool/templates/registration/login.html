@@ -9,9 +9,9 @@
 </head>
 <body class="rock">
 <div class="container">
-    <form method="post" action="." class="form-signin">
+    <form method="post" action={% url 'login'%} class="form-signin">{% csrf_token %}
 <center>
-    <h2 class="form-signin-heading" style="margin-top:10%">Please Sign in </h2><div style="margin-top:3%">{% csrf_token %}
+    <h2 class="form-signin-heading" style="margin-top:10%">Please Sign in </h2><div style="margin-top:3%">
 	<div class="row">
 
 		<div class="col-sm-4"></div>

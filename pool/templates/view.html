@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
+
+
+
 {% block content %}
 {% for temp in object_list %}
 <div class="col-md-4"><br><br>
 <div class="card"  style="width: 18rem;background-color:white">
+	{%if temp.event_images %}
     <img class="card-img-top" width=200px height=200px src="{{temp.event_images.url}}"  alt="Card image cap">
+    {% else %}
+    {%endif%}
     <div class="card-body">
       <p class="card-text b"><b>{{ temp.event_description }}</b> by</p>
       <h4 class="card-title">{{ temp.event_title }}</h4>
       <p style="color:rgb(167, 163, 163);margin-left:90%"> {{ temp.venue }} </p>
-      <a href="{% url 'Event_detail' temp.id %}" class="btn btn-primary" style="margin-top:20%">View More</a>
+      <a href="{% url 'Event_detail' temp.id %}" class="btn btn-primary" style="margin-top:20%;width:100%">View More</a>
+{% if request.user.is_superuser %}
+<div>
+
+      <a href="{% url 'eventupdate' temp.id %}" class="btn btn-info" style="margin-top:20%;width:30%;">Edit</a>
+      <form method="POST" action="{% url 'eventdelete' temp.id %}">{% csrf_token %}
+      <input type="submit" value="DELETE" class="btn btn-danger" style="margin-top:20%;width:46%">
+      </form>
+</div>
+{% endif %}
     </div>
   </div>
   </div>
+
 {% endfor %}
 
 
