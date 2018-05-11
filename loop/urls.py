@@ -19,11 +19,17 @@ from pool import views
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+from pool.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.HomeView.as_view(), name="home"),
     path('account/',include("pool.urls")),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('view/',views.view.as_view(),name="display"),
-    path('detail/(<pk>)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail")
+    path('detail/(<pk>)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail"),
+
+
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

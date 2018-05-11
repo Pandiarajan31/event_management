@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser,BaseUserManager)
 from django.contrib.auth.models import PermissionsMixin
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 
@@ -37,7 +38,7 @@ class MyUserManager(BaseUserManager):
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=50, null=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
-    mobile_no = models.IntegerField()
+    mobile_no = models.IntegerField(null = True)
 
     is_staff = models.BooleanField(('staff status'), default=False,)
     is_superuser = models.BooleanField(('staff status'),default=False)
@@ -70,3 +71,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.user.email
+

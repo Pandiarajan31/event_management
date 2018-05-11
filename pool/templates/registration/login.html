@@ -25,6 +25,11 @@
         {{form|crispy}}
 </div></div> 
         <button class=" btn btn-lg btn-primary btn-block" type="submit" style="width:15%;margin-top:3%">sign in </button>
+        <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+
+        <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
+
 
 </center>
     </form>

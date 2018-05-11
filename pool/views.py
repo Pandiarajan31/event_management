@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django.views.generic import FormView
@@ -19,6 +20,8 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.core.signing import Signer
 
 
 
@@ -38,7 +41,22 @@ class RegisterUserView(FormView):
                                                  form.cleaned_data.get('mobile_no'),
                                                  form.cleaned_data.get('name')                                     
                                                  )
+            
+            obj = form.save(commit=False)
+            obj.password = make_password(obj.password)
+            obj.is_active = False
+            form.save()
+            signer = Signer()
+            signed_value = signer.sign(obj.email)
+            key = ''.join(signed_value.split(':')[1:])
+            reg_obj = Registration.objects.create(user=obj, key=key)
+            msg_html = render_to_string('shopping_app/email-act.html', {'key': key})
+
+            send_mail("123", "123", 'anjitha.test@gmail.com', [obj.email], html_message=msg_html, fail_silently=False)
+            return super().form_valid(form)
+
             return render(self.request,"registration/login.html", {'form':LoginUserForm})
+ 
 
 
 

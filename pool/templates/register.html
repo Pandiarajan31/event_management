@@ -9,11 +9,13 @@
 {% endblock  %}
 
 {% block content %}
-<center style="margin-top:3%">
+<div align="center">
+<center style="margin-top:3%;width:30%">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Register">
     </form>
 </center>
+</div>
 {% endblock  %}

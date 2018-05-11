@@ -10,6 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pandiarajaneeesparks@gmail.com'
+EMAIL_HOST_PASSWORD = '951513105031'
+EMAIL_PORT = 587
+
+
+
 import os
 from django.urls import reverse_lazy
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,7 +49,8 @@ INSTALLED_APPS = [
     'pool',
     'crispy_forms',
     'bootstrap3',
-    'django_tables2', 
+    'django_tables2',
+    'social_django', 
 ]
 
 MIDDLEWARE = [
@@ -51,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'loop.urls'
@@ -66,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
 
             ],
         },
@@ -74,7 +87,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'loop.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
 
+    'django.contrib.auth.backends.ModelBackend',
+)
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -128,7 +147,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
+SOCIAL_AUTH_GITHUB_KEY = 'a8907552c2b03894d4fe'
+SOCIAL_AUTH_GITHUB_SECRET = '8605e5b4dac38d7ee5c80d116d93e0bd3e0dfdb7'
 
-AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
-    )
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.10'
+SOCIAL_AUTH_FACEBOOK_KEY = '173385410045608'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'be5bc1ef95cd63af9c339bf9541e438e'
+SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'pandiarajan'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
