@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 
-EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'pandiarajaneeesparks@gmail.com'
 EMAIL_HOST_PASSWORD = '951513105031'
 EMAIL_PORT = 587
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
 
 
 
@@ -154,7 +156,9 @@ SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.10'
 SOCIAL_AUTH_FACEBOOK_KEY = '173385410045608'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'be5bc1ef95cd63af9c339bf9541e438e'
 SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'pandiarajan'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 

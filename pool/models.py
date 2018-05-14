@@ -65,10 +65,11 @@ class Item(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(UserProfile,on_delete = models.CASCADE,)
-    item = models.ForeignKey(Item,on_delete = models.CASCADE,null=True,blank=True)
+    item = models.ForeignKey(Item,on_delete = models.CASCADE)
+    user = models.ForeignKey(UserProfile,on_delete = models.CASCADE)
     comment = models.TextField(null=True,blank=True)
+    timesmow = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.user.email
+        return '{}-{}'.format(self.item.event_title,str(self.user.email))
 

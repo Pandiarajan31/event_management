@@ -13,7 +13,7 @@
     {% else %}
     <div>
 
-                    <a href="{% url 'register' %}" class="btn btn-danger btn-rounded">Sign Up</a>
+<a href="{% url 'logout' %}" class="top-menu btn btn-danger" style="width:10%;margin-left:80%">LOG OUT</a>
             </div>
     {% endif %}
 </div>
@@ -47,14 +47,22 @@
 
 
 
-<div>
-<textarea type="text" rows="4" cols="50">
-</textarea>
+<div class="main_comment_section">
+{%if comment%}
+{%for comments in comment %}
+            <blockquote class="blockquote">
+            <p class="mb-0">{{ comments.comment }}</p>
+            <footer class="blockquote-footer">by <cite title="Source Title">{{ comments.user|capfirst }}</cite></footer>
+            </blockquote>
+{% endfor %}
+{% endif %}
 </div>
+
 
         <button type="submit" class="btn btn-primary">
             {% bootstrap_icon "star" %} Submit
         </button>
+</div>
 </div>
 
     

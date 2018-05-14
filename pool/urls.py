@@ -3,7 +3,10 @@ from django.contrib.auth.views import LogoutView
 from django.conf.urls import url,include
 from django.views.generic import TemplateView
 from . import views
-from .views import LoginUserView,RegisterUserView,AdPostingView,view,ItemDetail,AddComment
+from .views import LoginUserView,RegisterUserView,AdPostingView,view,ItemDetail
+
+
+
 
 
 urlpatterns = [

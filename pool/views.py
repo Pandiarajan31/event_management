@@ -29,6 +29,7 @@ from django.core.signing import Signer
 
 
 # Create your views here.
+
 class RegisterUserView(FormView):
 
         template_name = "register.html"
@@ -36,27 +37,22 @@ class RegisterUserView(FormView):
         success_url = '/account/login'
 
         def form_valid(self, form):
-            UserProfile.objects.create_user(form.cleaned_data.get('email'),
-                                                 form.cleaned_data.get('password'),
-                                                 form.cleaned_data.get('mobile_no'),
-                                                 form.cleaned_data.get('name')                                     
-                                                 )
+            if form.is_valid():
+                save_it = form.save(commit = False)
+                UserProfile.objects.create_user(form.cleaned_data.get('email'),
+                                                  form.cleaned_data.get('password'),
+                                                  form.cleaned_data.get('mobile_no'),
+                                                  form.cleaned_data.get('name')                                     
+                                                  )
             
-            obj = form.save(commit=False)
-            obj.password = make_password(obj.password)
-            obj.is_active = False
-            form.save()
-            signer = Signer()
-            signed_value = signer.sign(obj.email)
-            key = ''.join(signed_value.split(':')[1:])
-            reg_obj = Registration.objects.create(user=obj, key=key)
-            msg_html = render_to_string('shopping_app/email-act.html', {'key': key})
+                subject = "Thanku"
+                message = "Welcome"
+                from_email = settings.EMAIL_HOST_USER
+                to_list = [save_it.email]
 
-            send_mail("123", "123", 'anjitha.test@gmail.com', [obj.email], html_message=msg_html, fail_silently=False)
+                send_mail(subject,message,from_email,to_list)
+
             return super().form_valid(form)
-
-            return render(self.request,"registration/login.html", {'form':LoginUserForm})
- 
 
 
 
@@ -68,7 +64,7 @@ class LoginUserView(FormView):
         def post(self, request, *args, **kwargs):
                 email = request.POST['email']
                 password = request.POST['password']
-                # try:
+
                 user = authenticate(request, email=email, password=password)
                 print("auth", str(authenticate(email=email, password=password)))
 
@@ -96,13 +92,22 @@ class view(LoginRequiredMixin, ListView):
         template_name = "view.html"
 
 class ItemDetail(LoginRequiredMixin, DetailView):
-        model = Item
+        model =  Item
         template_name="details.html" 
+        
+        if request.method == 'POST':
+            comment_form= CommentForm(request.POST or None)
+            if comment_form_is_valid():
+                
+             else:
+                 comment_form = CommentForm()
 
-class AddComment(LoginRequiredMixin, CreateView):
-        template_name = "details.html"
-        model = Comment
-        fields = '__all__'
+
+        def get_context_data(self,  **kwargs):
+            context = super(ItemDetail, self).get_context_data(**kwargs)
+            context['comment'] = Comment.objects.all().order_by('id')
+            return context
+         
 
 class UpdateEvent(SuccessMessageMixin, UpdateView):
         template_name = "event/postevent.html"
