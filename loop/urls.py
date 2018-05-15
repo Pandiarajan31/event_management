@@ -27,7 +27,7 @@ urlpatterns = [
     path('account/',include("pool.urls")),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('view/',views.view.as_view(),name="display"),
-    path('detail/(<pk>)/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail"),
+    path('detail/<pk>/', views.ItemDetail.as_view(template_name='details.html'), name="Event_detail"),
 
 
 

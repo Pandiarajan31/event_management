@@ -15,7 +15,8 @@ urlpatterns = [
     path('logout/',LogoutView.as_view(), name="logout"),
     path('eventposting/',views.AdPostingView.as_view(),name="eventposting"),
     path('edit/<pk>/',views.UpdateEvent.as_view(),name="eventupdate"),
-    path('delete/<pk>/',views.DeleteEvent.as_view(),name="eventdelete")
+    path('delete/<pk>/',views.DeleteEvent.as_view(),name="eventdelete"),
+    path('myads/',views.MyAds.as_view(), name="myads"),
 ]
 # urlpatterns = [
 #     url(r'^register/', include('accounts.urls')), # add .urls after app name

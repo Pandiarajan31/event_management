@@ -54,6 +54,7 @@ class Item(models.Model):
     event_description = models.TextField()
     event_images = models.ImageField(upload_to='event/images')
     detailed_images = models.ImageField(upload_to='event/images')
+    creator_name = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True,blank=True)
     name = models.CharField(max_length=15)
     contact_phone_no = models.IntegerField()
     price=models.IntegerField(default=1)

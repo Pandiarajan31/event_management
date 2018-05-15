@@ -22,6 +22,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.core.signing import Signer
+import requests
+from django.shortcuts import get_list_or_404, get_object_or_404
+
 
 
 
@@ -84,27 +87,50 @@ class AdPostingView(SuperuserRequiredMixin, CreateView):
         template_name = "event/postevent.html"
         model = Item
         success_url = '/view/'
-        fields = '__all__'
+        fields = ['event_title','event_description','event_images','detailed_images','name','contact_phone_no','price','venue','date']
+
+        def form_valid(self, form):
+            self.object = form.save(commit=False) 
+            self.object.creator_name = self.request.user
+            self.object.save()
+            return HttpResponseRedirect('/view/')
+
+
+
+class MyAds(SuperuserRequiredMixin, generic.ListView):
+        model = Item
+        template_name = "own.html"
+
+        def get_queryset(self): 
+            return Item.objects.filter(creator_name=self.request.user)
 
 class view(LoginRequiredMixin, ListView):
         paginate_by = 10
         model = Item
         template_name = "view.html"
 
+
+
 class ItemDetail(LoginRequiredMixin, DetailView):
         model =  Item
         template_name="details.html" 
-        
-        if request.method == 'POST':
-            comment_form= CommentForm(request.POST or None)
-            if comment_form_is_valid():
-                
-             else:
-                 comment_form = CommentForm()
+        def post(self,request, **kwargs):
+            #item = get_object_or_404(Item,id)
+            item=Item.objects.get(id=id)
+            if request.method == 'POST':
+                comment_form= CommentForm(request.POST or None)
+                if comment_form.is_valid():
+                    content = request.POST.get('comment')
+                    comment = Comment.objects.create(item_id=item.id, user=request.user, comment=comment)
+                    comment.save()
+                    return HttpResponseRedirect(item.get_absolute_url())
+            else:
+                comment_form = CommentForm()
 
 
         def get_context_data(self,  **kwargs):
             context = super(ItemDetail, self).get_context_data(**kwargs)
+            context['comment_form'] = CommentForm()
             context['comment'] = Comment.objects.all().order_by('id')
             return context
          

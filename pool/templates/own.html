@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+        <h1>home</h1>
+        <h3>hi {{request.user.name}} , your ads</h3>
+
+
+        <br/>
+<div class="row">
+
+                    {% for item in object_list %}
+
+                        <div class="col-md-4">
+
+                            <div class="card"  style="background-color:white">
+
+                                    {{ item.item_title }}
+                                 <img class="card-img-top" width=200px height=200px src="{{item.item_images.url}}"/>
+
+                                 <div class="card-body">
+                                            {{item.venue}}
+
+                                            Rs {{item.price}} /-
+                            {% ifequal request.user.email  item.creator_name.email %}
+                             <a href="{% url 'eventupdate' item.id %}" class="btn btn-info" style="margin-top:20%;width:30%;">Edit</a>
+                            {% endifequal %}
+
+
+
+                                 </div>
+                             </div>
+                        </div>
+                    {% endfor %}
+</div>
+{%endblock%}

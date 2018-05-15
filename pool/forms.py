@@ -31,5 +31,6 @@ class LoginUserForm(forms.Form):
                 field.widget.attrs = {'class': 'form-control'}
 
 class CommentForm(forms.ModelForm):
+    class Meta:
         model = Comment
-        fields = ('comment')
+        fields = ('comment',)
