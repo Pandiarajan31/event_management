@@ -24,6 +24,8 @@ from django.core.mail import send_mail
 from django.core.signing import Signer
 import requests
 from django.shortcuts import get_list_or_404, get_object_or_404
+from django.forms.widgets import SelectDateWidget
+
 
 
 
@@ -95,6 +97,10 @@ class AdPostingView(SuperuserRequiredMixin, CreateView):
             self.object.save()
             return HttpResponseRedirect('/view/')
 
+        def get_form(self):
+            form = super(AdPostingView, self).get_form()
+            form.fields['date'].widget = SelectDateWidget()
+            return form
 
 
 class MyAds(SuperuserRequiredMixin, generic.ListView):
